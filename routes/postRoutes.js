@@ -62,4 +62,18 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, body, imgUrl } = req.body;
+
+  try {
+    const post = await Post.findByPk(id);
+    const newPost = await post.update({ title, body, imgUrl });
+
+    return res.json({ newPost });
+  } catch (error) {
+    res.status(500).json({ error: `Erro: ${error}` });
+  }
+});
+
 module.exports = router;
